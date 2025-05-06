@@ -50,15 +50,6 @@ const NavbarComponent = () => {
                 );
               })}
             </Nav>
-            <div className="text-center">
-              {/* Button untuk menampilkan Sidebar */}
-              <button
-                className="btn btn-outline-danger rounded-1"
-                onClick={toggleSidebar}  // Panggil toggleSidebar saat tombol diklik
-              >
-                More Info
-              </button>
-            </div>
           </Navbar.Collapse>
         </Container>
       </Navbar>
