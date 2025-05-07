@@ -1,19 +1,25 @@
 import React from 'react';
 import '../assets/css/HomePage.css';
+import pakan from '../assets/image/pakan.png';
+import usir from '../assets/image/usir.png';
+import sistem from '../assets/image/sistem.png';
 
 function HomePage() {
   const features = [
     {
       title: 'Pakan & Pupuk Otomatis',
-      desc: 'Secara teratur sesuai kondisi lingkungan, menstabilkan keseimbangan nutrisi dan efisiensi pemeliharaan.',
+      desc: 'Pemberian pakan dan pupuk secara teratur sesuai kondisi lingkungan, menstabilkan keseimbangan nutrisi dan efisiensi pemeliharaan.',
+      photo: pakan
     },
     {
-      title: 'Usir Hama Burung Otomatis',
-      desc: 'Melindungi kolam dari hama burung, menjaga lingkungan kolam tetap aman tanpa pengusiran manual.',
+      title: 'Anti Hama Burung',
+      desc: 'Pengusiran hama burung secara otomatis. Melindungi kolam dari hama burung, menjaga lingkungan kolam tetap aman tanpa pengusiran manual.',
+      photo: usir
     },
     {
       title: 'Riwayat Sistem Otomatis',
       desc: 'Mencatat riwayat aktivitas kolam secara otomatis melalui sistem sensor akurat dan informatif.',
+      photo: sistem
     },
   ];
 
@@ -34,12 +40,12 @@ function HomePage() {
       </section>
 
       <section className="features">
-        <p className="subtitle">Kenapa menggunakan Ico-Pond ?</p>
+        <p className="subtitle">Kenapa menggunakan ICo-Pond?</p>
         <h2>Manfaat Ico-Pond sebagai pemantauan kolam peternak</h2>
         <div className="feature-cards">
           {features.map((item, idx) => (
             <div className="card" key={idx}>
-              <div className="icon-placeholder"></div>
+              <img src={item.photo} alt={item.title} className="feature-icon" />
               <h3>{item.title}</h3>
               <p>{item.desc}</p>
             </div>
