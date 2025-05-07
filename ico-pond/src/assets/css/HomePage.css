@@ -1,10 +1,4 @@
-body {
-    margin: 0;
-    font-family: sans-serif;
-    background-color: #ffffff;
-  }
-  
-  .container {
+    .container {
     width: 100%;
     max-width: 1200px;
     margin: auto;
@@ -14,6 +8,7 @@ body {
   .hero {
     display: flex;
     flex-wrap: wrap;
+    margin-top: 50px;
     padding: 40px;
     align-items: center;
     justify-content: space-between;
