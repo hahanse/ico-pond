@@ -1,13 +1,8 @@
-import React from "react";
-import {
-  RadialBarChart,
-  RadialBar,
-  PolarAngleAxis,
-  ResponsiveContainer,
-} from "recharts";
-import '../assets/css/Product.css';
+import React, { useState } from "react";
+import GaugeChart from "react-gauge-chart";
+import "../assets/css/Product.css";
 
-const activityData = [
+const hamaData = [
   { no: 1, waktu: "6 Mei 2025, 11:00", keterangan: "Terdeteksi gerakan hama burung" },
   { no: 2, waktu: "7 Mei 2025, 12:00", keterangan: "Terdeteksi gerakan hama burung" },
   { no: 3, waktu: "8 Mei 2025, 13:00", keterangan: "Terdeteksi gerakan hama burung" },
@@ -17,55 +12,62 @@ const activityData = [
   { no: 7, waktu: "12 Mei 2025, 17:00", keterangan: "Terdeteksi gerakan hama burung" },
 ];
 
-// Nilai pH dari 0–14 (misalnya 7 adalah netral)
-const phValue = 7;
-
-const gaugeData = [
-  {
-    name: "pH",
-    value: phValue,
-    fill: phValue < 6 ? "#EA4228" : phValue > 8 ? "#5BE12C" : "#F5CD19",
-  },
+const pakanData = [
+  { no: 1, waktu: "5 Mei 2025, 10:00", keterangan: "Pemberian pakan otomatis" },
+  { no: 2, waktu: "6 Mei 2025, 09:30", keterangan: "Pemberian pupuk cair" },
+  { no: 3, waktu: "7 Mei 2025, 08:45", keterangan: "Pemberian pakan manual" },
+  { no: 4, waktu: "9 Mei 2025, 10:15", keterangan: "Pemberian pupuk organik" },
 ];
 
 const Product = () => {
+  const [activeTab, setActiveTab] = useState("hama");
+  const phValue = 4.9;
+  const activityData = activeTab === "hama" ? hamaData : pakanData;
+
   return (
     <div className="product-container">
-      <h2 className="section-title">Monitoring</h2>
-      <div className="gauge-box">
-        <h3>pH</h3>
-        <ResponsiveContainer width="100%" height={250}>
-          <RadialBarChart
-            cx="50%"
-            cy="100%"
-            innerRadius="70%"
-            outerRadius="100%"
-            startAngle={180}
-            endAngle={0}
-            data={gaugeData}
-          >
-            <PolarAngleAxis
-              type="number"
-              domain={[0, 14]}
-              angleAxisId={0}
-              tick={false}
-            />
-            <RadialBar
-              background
-              clockWise
-              dataKey="value"
-              cornerRadius={20}
-            />
-          </RadialBarChart>
-        </ResponsiveContainer>
-        <div className="ph-value">pH: {phValue}</div>
+      <div className="text-center my-6">
+        <h2 className="section-title text-2xl font-bold mb-4">Monitoring</h2>
       </div>
 
-      <h2 className="section-title">Riwayat Aktivitas Kolam</h2>
+      <div className="gauge-box">
+        <h3 className="gauge-title">pH</h3>
+        <GaugeChart
+          id="ph-gauge"
+          nrOfLevels={420}
+          arcsLength={[3/14, 3/14, 2.5/14, 2.5/14, 3/14]}
+          colors={["#ff0000", "#ffff00", "#00ff00", "#0000ff", "#800080"]}
+          percent={phValue / 14}
+          arcPadding={0.01}
+          cornerRadius={3}
+          textColor="#000"
+          needleColor="#90ee90"
+          needleBaseColor="#90ee90"
+          formatTextValue={() => `${phValue} pH`}
+        />
+      </div>
+
+      <h2 className="section-title mt-8">Riwayat Aktivitas Kolam</h2>
+
+      {/* Tombol pindah tab */}
+      <div className="button-group">
+        <button
+          className={`tab-button ${activeTab === "hama" ? "active" : ""}`}
+          onClick={() => setActiveTab("hama")}
+        >
+          Deteksi Hama Burung
+        </button>
+        <button
+          className={`tab-button ${activeTab === "pakan" ? "active" : ""}`}
+          onClick={() => setActiveTab("pakan")}
+        >
+          Cek Pakan & Pupuk
+        </button>
+      </div>
+
+      {/* Tabel log */}
       <div className="log-table">
         <div className="table-header">
-          <span>Tabel Log</span>
-          <span className="icon">{`</>`}</span>
         </div>
         <table>
           <thead>
@@ -82,7 +84,7 @@ const Product = () => {
                 <td>{row.no}</td>
                 <td>{row.waktu}</td>
                 <td>{row.keterangan}</td>
-                <td></td>
+                <td>-</td>
               </tr>
             ))}
           </tbody>
