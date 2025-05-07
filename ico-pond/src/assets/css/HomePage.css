@@ -57,13 +57,15 @@ body {
   }
   
   .features .subtitle {
-    font-size: 30px;
+    font-size: 27px;
     margin-bottom: 10px;
+    font-weight: bold;
   }
   
   .features h2 {
-    font-size: 25px;
+    font-size: 22px;
     margin-bottom: 30px;
+    font-weight: 600;
   }
   
   .feature-cards {
@@ -86,12 +88,13 @@ body {
     color: black;
     padding: 20px;
     border-radius: 10px;
-    width: 370px; 
+    width: 300px; 
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
 
   .card h3 {
-    font-size: 22px;
+    font-size: 20px;
+    font-weight: bold;
   }
   
   .card p {
