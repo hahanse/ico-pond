@@ -4,7 +4,6 @@ import rafi from '../assets/image/rafi.jpg';
 import bayu from '../assets/image/bayu.jpg';
 import fakhri from '../assets/image/fakhri.jpg';
 
-
 function About() {
   const imageList = [
     'image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg'

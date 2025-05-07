@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #ffffff;
   }
   
@@ -37,7 +37,7 @@ body {
   
   .hero-text p {
     margin-top: 10px;
-    color: #555;
+    color: #000000;
   }
   
   .hero-image {
@@ -56,12 +56,12 @@ body {
   }
   
   .features .subtitle {
-    font-size: 14px;
+    font-size: 30px;
     margin-bottom: 10px;
   }
   
   .features h2 {
-    font-size: 20px;
+    font-size: 25px;
     margin-bottom: 30px;
   }
   
@@ -71,14 +71,30 @@ body {
     justify-content: space-around;
     gap: 20px;
   }
+
+  .feature-icon {
+    width: 180px;     /* Ganti jadi lebih kecil */
+    height: 180px;
+    object-fit: contain;
+    margin: 0 auto 1rem auto; /* gambar rata tengah */
+    display: block;
+  }  
   
   .card {
     background-color: white;
     color: black;
     padding: 20px;
     border-radius: 10px;
-    width: 300px;
+    width: 370px; 
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  .card h3 {
+    font-size: 22px;
+  }
+  
+  .card p {
+    font-size: 16px;
   }
   
   .icon-placeholder {
