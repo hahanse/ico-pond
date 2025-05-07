@@ -1,5 +1,5 @@
 import React from 'react';
-import '../dist/css/HomePage.css';
+import '../assets/css/HomePage.css';
 
 function HomePage() {
   const features = [

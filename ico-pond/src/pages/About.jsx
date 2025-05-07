@@ -1,6 +1,8 @@
 import React from 'react';
-import '../dist/css/About.css';
+import '../assets/css/About.css';
 import rafi from '../assets/image/rafi.jpg';
+import bayu from '../assets/image/bayu.jpg';
+import fakhri from '../assets/image/fakhri.jpg';
 
 
 function About() {
@@ -9,9 +11,9 @@ function About() {
   ];
 
   const team = [
-    { name: 'Rafi Raihan Firdaus', role: 'Frontend', photo: rafi },
-    { name: 'Bayu Haikal Salsabil', role: 'Backend', photo: 'bayu.jpg' },
-    { name: 'Fakfri Fitra Perdana', role: 'IoT', photo: 'fakfri.jpg' },
+    { name: 'Rafi Raihan Firdaus', role: 'Front-End', photo: rafi },
+    { name: 'Bayu Haikall Salsabil', role: 'Back-End', photo: bayu },
+    { name: 'Fakhri Fitra Perdana', role: 'IoT', photo: fakhri },
   ];
 
   return (

@@ -5,7 +5,7 @@ import {
   PolarAngleAxis,
   ResponsiveContainer,
 } from "recharts";
-import '../dist/css/Product.css';
+import '../assets/css/Product.css';
 
 const activityData = [
   { no: 1, waktu: "6 Mei 2025, 11:00", keterangan: "Terdeteksi gerakan hama burung" },
