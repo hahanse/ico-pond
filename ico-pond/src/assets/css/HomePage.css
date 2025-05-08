@@ -26,17 +26,18 @@ body {
   }
   
   .hero-text h1 {
-    font-size: 24px;
+    font-size: 27px;
     font-weight: bold;
   }
   
   .hero-text h2 {
-    font-size: 20px;
-    font-weight: semi-bold;
+    font-size: 22px;
+    font-weight: 600;
     margin-top: 10px;
   }
   
   .hero-text p {
+    font-size: 16px;
     margin-top: 10px;
     color: #000000;
   }
@@ -54,6 +55,7 @@ body {
     padding: 40px;
     color: white;
     text-align: center;
+    margin-top: 80px;
   }
   
   .features .subtitle {
@@ -115,35 +117,37 @@ body {
   }
   
   .future h2 {
+    font-size: 27px;
+    font-weight: bold;
     background-color: #28c3c3;
     display: inline-block;
     padding: 10px 20px;
     color: white;
     border-radius: 10px;
     margin-bottom: 30px;
+    margin-top: 80px;
   }
   
   .icon-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 kolom */
+    gap: 40px;
+    justify-items: center;
+    margin-top: 40px;
   }
   
   .icon-item {
-    width: 100px;
     text-align: center;
+  }
+  
+  .icon-item img {
+    width: 120px; /* ukuran gambar */
+    height: auto;
   }
   
   .icon-item p {
     margin-top: 10px;
-    font-size: 12px;
+    font-size: 16px;
+    color: #222;
   }
   
-  .icon-placeholder {
-    width: 40px;
-    height: 40px;
-    background-color: black;
-    margin: auto;
-    border-radius: 5px;
-  }

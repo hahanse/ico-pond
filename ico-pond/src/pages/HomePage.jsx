@@ -3,6 +3,11 @@ import '../assets/css/HomePage.css';
 import pakan from '../assets/image/pakan.png';
 import usir from '../assets/image/usir.png';
 import sistem from '../assets/image/sistem.png';
+import kembangbiak from '../assets/image/kembangbiak.png';
+import manusia from '../assets/image/manusia.png';
+import pemantauan from '../assets/image/pemantauan.png';
+import pemeliharaan from '../assets/image/pemeliharaan.png';
+import perlindungan from '../assets/image/perlindungan.png';
 
 function HomePage() {
   const features = [
@@ -23,7 +28,28 @@ function HomePage() {
     },
   ];
 
-  const items = new Array(6).fill('akjhasdklhajkhasd');
+  const icons = [
+    {
+      image: pemeliharaan,
+      text: 'Pemeliharaan Otomatis'
+    },
+    {
+      image: pemantauan,
+      text: 'Pemantauan Jarak Jauh'
+    },
+    {
+      image: kembangbiak,
+      text: 'Perkembangbiakan Optimal'
+    },
+    {
+      image: perlindungan, 
+      text: 'Perlindungan Otomatis'
+    },
+    {
+      image: manusia,
+      text: 'Hemat Sumber Daya Manusia'
+    },
+  ];
 
   return (
     <div className="container">
@@ -56,10 +82,10 @@ function HomePage() {
       <section className="future">
         <h2>Masa Depan Bersama ICo-Pond</h2>
         <div className="icon-grid">
-          {items.map((text, idx) => (
+          {icons.map((item, idx) => (
             <div className="icon-item" key={idx}>
-              <div className="icon-placeholder"></div>
-              <p>{text}</p>
+              <img src={item.image} alt={item.text} />
+              <p>{item.text}</p>
             </div>
           ))}
         </div>
