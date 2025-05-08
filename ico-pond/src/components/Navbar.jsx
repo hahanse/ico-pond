@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 const NavbarComponent = () => {
   const [changeColor, setChangeColor] = useState(false);
-  const [showSidebar, setShowSidebar] = useState(false);  // State untuk menampilkan Sidebar
+  const [showSidebar, setShowSidebar] = useState(false);  
 
   const changeBackgroundColor = () => {
     if (window.scrollY > 10) {
@@ -25,16 +25,16 @@ const NavbarComponent = () => {
     };
   }, []);
 
-  // Fungsi untuk toggle tampilan sidebar
+
   const toggleSidebar = () => {
-    setShowSidebar(!showSidebar);  // Toggle state untuk sidebar
+    setShowSidebar(!showSidebar);  
   };
 
   return (
     <div>
       <Navbar expand="lg" className={'fixed-top ${changeColor ? "color-active" : ""}'}>
         <Container>
-          <Navbar.Brand href="#home" className="fs-3 fw-bold">ICo-Pond</Navbar.Brand>
+          <Navbar.Brand href="/" className="fs-3 fw-bold">ICo-Pond</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto text-center">

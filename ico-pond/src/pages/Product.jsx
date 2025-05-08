@@ -29,23 +29,30 @@ const Product = () => {
       <div className="text-center my-6">
         <h2 className="section-title text-2xl font-bold mb-4">Monitoring</h2>
       </div>
-
       <div className="gauge-box">
-        <h3 className="gauge-title">pH</h3>
-        <GaugeChart
-          id="ph-gauge"
-          nrOfLevels={420}
-          arcsLength={[3/14, 3/14, 2.5/14, 2.5/14, 3/14]}
-          colors={["#ff0000", "#ffff00", "#00ff00", "#0000ff", "#800080"]}
-          percent={phValue / 14}
-          arcPadding={0.01}
-          cornerRadius={3}
-          textColor="#000"
-          needleColor="#90ee90"
-          needleBaseColor="#90ee90"
-          formatTextValue={() => `${phValue} pH`}
-        />
-      </div>
+  <h3 className="gauge-title">pH</h3>
+  <GaugeChart
+    id="ph-gauge"
+    nrOfLevels={500}
+    arcsLength={[0.2, 0.2, 0.2, 0.2, 0.2]} // lima bagian sama rata
+    colors={["#ff0000", "#ffa500", "#00ff00", "#00bfff", "#800080"]}
+    percent={phValue / 14}
+    arcPadding={0.01}
+    cornerRadius={3}
+    textColor="#000"
+    needleColor="#90ee90"
+    needleBaseColor="#90ee90"
+    formatTextValue={() => `${phValue} pH`}
+  />
+  <div className="ph-labels">
+    <span className="label-item" style={{ color: "#ff0000" }}>Sangat Asam</span>
+    <span className="label-item" style={{ color: "#ffa500" }}>Asam</span>
+    <span className="label-item" style={{ color: "#00ff00" }}>Netral</span>
+    <span className="label-item" style={{ color: "#00bfff" }}>Basa</span>
+    <span className="label-item" style={{ color: "#800080" }}>Sangat Basa</span>
+  </div>
+</div>
+
 
       <h2 className="section-title mt-8">Riwayat Aktivitas Kolam</h2>
 
@@ -84,7 +91,19 @@ const Product = () => {
                 <td>{row.no}</td>
                 <td>{row.waktu}</td>
                 <td>{row.keterangan}</td>
-                <td>-</td>
+                <td>
+                  {activeTab === "hama" ? (
+                    <img
+                      src="path-to-your-image.jpg"
+                      alt="Hama Image"
+                      style={{ width: "100px", height: "auto" }}
+                    />
+                  ) : (
+                    <span style={{ color: "red", fontWeight: "bold" }}>
+                      Peringatan: Periksa pakan atau pupuk!
+                    </span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
