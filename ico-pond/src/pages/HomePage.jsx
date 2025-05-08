@@ -8,6 +8,7 @@ import manusia from '../assets/image/manusia.png';
 import pemantauan from '../assets/image/pemantauan.png';
 import pemeliharaan from '../assets/image/pemeliharaan.png';
 import perlindungan from '../assets/image/perlindungan.png';
+import image2 from '../assets/image/image2.jpg';
 
 function HomePage() {
   const features = [
@@ -62,7 +63,9 @@ function HomePage() {
             sistem pintar kami memberikan pengalaman yang lancar dan aman, kapan saja, di mana saja.
           </p>
         </div>
-        <div className="hero-image" />
+        <div className="hero-image">
+          <img src={image2} alt="ICo-Pond Preview" className="hero-image" />
+        </div>
       </section>
 
       <section className="features">
