@@ -1,13 +1,22 @@
 import React from 'react';
 import '../assets/css/About.css';
+
+// Foto tim
 import rafi from '../assets/image/rafi.jpg';
 import bayu from '../assets/image/bayu.jpg';
 import fakhri from '../assets/image/fakhri.jpg';
 
+// Gambar kolam
+import image1 from '../assets/image/image1.jpg';
+import image2 from '../assets/image/image2.jpg';
+import image3 from '../assets/image/image3.jpg';
+import image4 from '../assets/image/image4.jpg';
+
+// GIF kolam
+import kolamGif from '../assets/image/gif.gif';
+
 function About() {
-  const imageList = [
-    'image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg'
-  ];
+  const imageList = [image1, image2, image3, image4];
 
   const team = [
     { name: 'Rafi Raihan Firdaus', role: 'Front-End', photo: rafi },
@@ -33,8 +42,12 @@ function About() {
       </section>
 
       <section className="about-gif">
-        <img src="kolam-animation.gif" alt="GIF kolam" />
+      <div className="gif-wrapper">
+        <img src={kolamGif} alt="GIF kolam" />
+        <p className="gif-caption">Visualisasi kolam kami yang cerdas dan responsif menggunakan ICo-Pond</p>
+      </div>
       </section>
+
 
       <section className="about-team">
         <h2>Anggota Tim</h2>
