@@ -126,7 +126,7 @@ body {
     color: white;
     border-radius: 10px;
     margin-bottom: 30px;
-    margin-top: 80px;
+    margin-top: 60px;
   }
   
   .icon-grid {
@@ -147,12 +147,88 @@ body {
   }
   
   .icon-item p {
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 40px;
     font-size: 16px;
-    color: #222;
+    color: #000000;
   }
+
+/* responsive */
+@media (max-width: 1024px) {
+  .icon-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .hero-text {
+    padding-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .hero-image {
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  .feature-cards {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .icon-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .features {
+    padding: 20px;
+  }
+
+  .future h2 {
+    font-size: 22px;
+  }
+
+  .icon-item img {
+    width: 100px;
+  }
+
+  .icon-item p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .icon-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .icon-item img {
+    width: 80px;
+  }
+
+  .icon-item p {
+    font-size: 13px;
+  }
+
+  .future h2 {
+    font-size: 18px;
+    padding: 6px 14px;
+  }
+}
   
-  /* Keyframes untuk berbagai animasi */
+/* Keyframes untuk berbagai animasi */
 @keyframes fadeSlideIn {
   0% {
     opacity: 0;

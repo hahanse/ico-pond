@@ -1,14 +1,20 @@
 import React from 'react';
 import '../assets/css/HomePage.css';
+
+//foto deskripsi singkat
+import image2 from '../assets/image/image2.jpg';
+
+// foto bagian manfaat
 import pakan from '../assets/image/pakan.png';
 import usir from '../assets/image/usir.png';
 import sistem from '../assets/image/sistem.png';
+
+//foto keunggulan
 import kembangbiak from '../assets/image/kembangbiak.png';
 import manusia from '../assets/image/manusia.png';
 import pemantauan from '../assets/image/pemantauan.png';
 import pemeliharaan from '../assets/image/pemeliharaan.png';
 import perlindungan from '../assets/image/perlindungan.png';
-import image2 from '../assets/image/image2.jpg';
 
 function HomePage() {
   const features = [

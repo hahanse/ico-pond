@@ -29,8 +29,11 @@ function About() {
       <section className="about-top">
         <h2>Tentang Kami</h2>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          Kami adalah tim mahasiswa Teknik Telekomunikasi Universitas Telkom yang meneliti sistem
+          pemeliharaan dan perlindungan kolam bibit ikan lele berbasis IoT. Sistem ini terintegrasi
+          melalui website dan dilengkapi fitur otomatisasi seperti pemberian pakan, pupuk, serta
+          pengusiran hama burung. Tujuan kami adalah membantu peternak memantau kolam secara
+          efisien, real-time, dan berkelanjutan.
         </p>
         <div className="image-row">
           {imageList.map((img, idx) => (
@@ -48,7 +51,6 @@ function About() {
       </div>
       </section>
 
-
       <section className="about-team">
         <h2>Anggota Tim</h2>
         <div className="team-grid">
@@ -59,6 +61,20 @@ function About() {
               <p>{member.role}</p>
             </div>
           ))}
+        </div>
+      </section>
+      
+      <section className="about-location">
+        <h2>Lokasi Penelitian</h2>
+        <p>Bandung Techno Park</p>
+        <div className="map-container">
+          <iframe
+            title="Lokasi Kolam"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.3289824321746!2d107.6277440750442!3d-6.970459993030169!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e9ace29fcd5f%3A0xfa6ffa9182123965!2sBandung%20Techno%20Park!5e0!3m2!1sen!2sid!4v1747387110590!5m2!1sen!2sid"
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </section>
     </div>

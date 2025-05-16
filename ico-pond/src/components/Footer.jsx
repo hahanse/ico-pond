@@ -7,7 +7,7 @@ function Footer() {
       <div className="footer-container">
         <div className="footer-brand">
           <h3>ICo-Pond</h3>
-          <p>Sistem monitoring dan perlindungan kolam otomatis.</p>
+          <p>Sistem pemeliharaan dan perlindungan otomatis.</p>
         </div>
 
         <div className="footer-links">
