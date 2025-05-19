@@ -6,10 +6,10 @@ import "../assets/css/Product.css";
 const socket = io("http://localhost:3000");
 
 const initialPakanData = [
-  { no: 1, waktu: "5 Mei 2025, 10:00", keterangan: "Pemberian pakan otomatis" },
-  { no: 2, waktu: "6 Mei 2025, 09:30", keterangan: "Pemberian pupuk cair" },
-  { no: 3, waktu: "7 Mei 2025, 08:45", keterangan: "Pemberian pakan manual" },
-  { no: 4, waktu: "9 Mei 2025, 10:15", keterangan: "Pemberian pupuk organik" },
+  { no: 1, waktu: "5 Mei 2025, 10:00", keterangan: "Terjadi hujan", aksi: "Pemberian pakan dan pupuk ditunda"},
+  { no: 2, waktu: "6 Mei 2025, 09:30", keterangan: "Hujan sudah reda", aksi: "Pupuk telah diberikan"},
+  { no: 3, waktu: "7 Mei 2025, 08:45", keterangan: "pH kolam asam", aksi: "Pupuk telah diberikan"},
+  { no: 4, waktu: "9 Mei 2025, 10:15", keterangan: "Hujan reda sudah 1 jam", aksi: "pakan telah diberikan"},
 ];
 
 const Product = () => {
@@ -17,6 +17,9 @@ const Product = () => {
   const [phValue, setPhValue] = useState(7);
   const [hamaData, setHamaData] = useState([]);
   const [pakanData] = useState(initialPakanData);
+  const [fullscreenImg, setFullscreenImg] = useState(null);
+  const openFullscreen = (imgSrc) => setFullscreenImg(imgSrc);
+  const closeFullscreen = () => setFullscreenImg(null);
 
   useEffect(() => {
     // Ambil 10 gambar terbaru saat load
@@ -33,7 +36,7 @@ const Product = () => {
               hour: "2-digit",
               minute: "2-digit",
             }),
-            keterangan: "Terdeteksi gerakan hama",
+            keterangan: "Terdeteksi gerakan hama burung",
             imageUrl: item.url,
           }));
           setHamaData(formattedData);
@@ -82,31 +85,51 @@ const Product = () => {
       <div className="text-center my-6">
         <h2 className="section-title text-2xl font-bold mb-4">Monitoring</h2>
       </div>
+      
+      <div className="gauge-section">
+        <div className="gauge-box">
+          <h3 className="gauge-title">pH</h3>
+          <GaugeChart
+            id="ph-gauge"
+            nrOfLevels={500}
+            arcsLength={[0.2, 0.2, 0.2, 0.2, 0.2]}
+            colors={["#ff0000", "#ffa500", "#00ff00", "#00bfff", "#800080"]}
+            percent={phValue / 14}
+            arcPadding={0.01}
+            cornerRadius={3}
+            textColor="#000"
+            needleColor="#90ee90"
+            needleBaseColor="#90ee90"
+            formatTextValue={() => `${phValue.toFixed(2)} pH`}
+          />
+          <div className="ph-labels">
+            <span style={{ color: "#ff0000" }}>Sangat Asam</span>
+            <span style={{ color: "#ffa500" }}>Asam</span>
+            <span style={{ color: "#00ff00" }}>Netral</span>
+            <span style={{ color: "#00bfff" }}>Basa</span>
+            <span style={{ color: "#800080" }}>Sangat Basa</span>
+          </div>
+        </div>
 
-      <div className="gauge-box">
-        <h3 className="gauge-title">pH</h3>
-        <GaugeChart
-          id="ph-gauge"
-          nrOfLevels={500}
-          arcsLength={[0.2, 0.2, 0.2, 0.2, 0.2]}
-          colors={["#ff0000", "#ffa500", "#00ff00", "#00bfff", "#800080"]}
-          percent={phValue / 14}
-          arcPadding={0.01}
-          cornerRadius={3}
-          textColor="#000"
-          needleColor="#90ee90"
-          needleBaseColor="#90ee90"
-          formatTextValue={() => `${phValue.toFixed(2)} pH`}
-        />
-        <div className="ph-labels">
-          <span style={{ color: "#ff0000" }}>Sangat Asam</span>
-          <span style={{ color: "#ffa500" }}>Asam</span>
-          <span style={{ color: "#00ff00" }}>Netral</span>
-          <span style={{ color: "#00bfff" }}>Basa</span>
-          <span style={{ color: "#800080" }}>Sangat Basa</span>
+        <div className="ph-legend">
+          <div className="legend-item">
+            <span className="legend-color" style={{ backgroundColor: "#ff0000"}}></span>2–4
+          </div>
+          <div className="legend-item">
+            <span className="legend-color" style={{ backgroundColor: "#ffa500"}}></span>4–6
+          </div>
+          <div className="legend-item">
+            <span className="legend-color" style={{ backgroundColor: "#00ff00"}}></span>6–8
+          </div>
+          <div className="legend-item">
+            <span className="legend-color" style={{ backgroundColor: "#00bfff"}}></span>8–10
+          </div>
+          <div className="legend-item">
+            <span className="legend-color" style={{ backgroundColor: "#800080"}}></span>10–12
+          </div>
         </div>
       </div>
-
+        
       <h2 className="section-title mt-8">Riwayat Aktivitas Kolam</h2>
 
       <div className="button-group">
@@ -154,7 +177,9 @@ const Product = () => {
                       <img
                         src={row.imageUrl}
                         alt="Hama"
-                        style={{ width: "100px", borderRadius: "6px" }}
+                        className="table-image"
+                        onClick={() => openFullscreen(row.imageUrl)}
+                        
                       />
                     ) : activeTab === "pakan" ? (
                       <span style={{ color: "red", fontWeight: "bold" }}>
@@ -167,6 +192,12 @@ const Product = () => {
             )}
           </tbody>
         </table>
+        {fullscreenImg && (
+          <div className="fullscreen-overlay" onClick={closeFullscreen}>
+            <button className="close-btn" onClick={closeFullscreen}>×</button>
+            <img src={fullscreenImg} alt="Fullscreen" className="fullscreen-img"/>
+          </div>
+        )}
       </div>
     </div>
   );
