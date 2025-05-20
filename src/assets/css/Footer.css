@@ -1,9 +1,9 @@
 .footer {
-    background: linear-gradient(135deg, #28c3c3, #1d9fa5);
-    color: #f8fafc;
+    background: #27bdb1;
+    color: #ffffff;
     padding: 24px 20px;
     font-family: 'Poppins', sans-serif;
-    border-top: 4px solid #38bdf8;
+    border-top: 4px solid #27bdb1;
 }
 
 .footer-container {
@@ -15,6 +15,8 @@
     margin: auto;
 }
 
+.footer-contact h4,
+.footer-links h4,
 .footer-brand h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
@@ -29,43 +31,32 @@
 }
 
 .footer-links ul li a {
-    color: #f8fafc;
+    color: #ffffff;
     text-decoration: none;
     display: block;
     margin: 6px 0;
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 500;
     transition: color 0.3s, transform 0.3s;
 }
 
 .footer-links ul li a:hover {
-    color: #38bdf8;
+    color: #27bdb1;
     transform: translateX(5px); 
 }
 
 .footer-contact p {
     margin: 4px 0;
-    font-size: 0.9rem;
-}
-
-.social-icons a {
-    margin-right: 12px;
-    color: #f8fafc;
-    font-size: 1.5rem;
-    transition: 0.3s;
-}
-
-.social-icons a:hover {
-    color: #38bdf8;
-    transform: scale(1.2); 
+    font-size: 16px;
+    color: #ffffff;
 }
 
 .footer-bottom {
     text-align: center;
     margin-top: 20px;
     padding-top: 10px;
-    font-size: 0.85rem;
-    color: #f8fafc;
+    font-size: 0.9rem;
+    color: #ffffff;
     margin-bottom: 0;
     font-weight: 300;
     letter-spacing: 0.5px;

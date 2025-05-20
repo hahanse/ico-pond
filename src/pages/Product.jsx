@@ -100,7 +100,7 @@ const Product = () => {
             textColor="#000"
             needleColor="#90ee90"
             needleBaseColor="#90ee90"
-            formatTextValue={() => `${phValue.toFixed(2)} pH`}
+            formatTextValue={() => `${phValue.toFixed(2)}`}
           />
           <div className="ph-labels">
             <span style={{ color: "#ff0000" }}>Sangat Asam</span>
@@ -179,13 +179,10 @@ const Product = () => {
                         alt="Hama"
                         className="table-image"
                         onClick={() => openFullscreen(row.imageUrl)}
-                        
                       />
-                    ) : activeTab === "pakan" ? (
-                      <span style={{ color: "red", fontWeight: "bold" }}>
-                        Peringatan: Periksa pakan atau pupuk!
-                      </span>
-                    ) : null}
+                    ) : (
+                      row.aksi
+                    ) }
                   </td>
                 </tr>
               ))

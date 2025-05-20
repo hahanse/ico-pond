@@ -23,11 +23,6 @@ function Footer() {
           <h4>Kontak</h4>
           <p>Email: icooopondd@email.com</p>
           <p>Telp: +62 812-3456-7890</p>
-          <div className="social-icons">
-            <a href="#"><i className="fab fa-instagram"></i></a>
-            <a href="#"><i className="fab fa-github"></i></a>
-            <a href="#"><i className="fab fa-linkedin"></i></a>
-          </div>
         </div>
       </div>
       <div className="footer-bottom">

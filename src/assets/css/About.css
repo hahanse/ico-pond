@@ -53,7 +53,7 @@
 }
 
 .about-gif {
-  background: linear-gradient(135deg, #e0f2fe, #28c3c3);
+  background: linear-gradient(135deg, #e0f2fe, #27bdb1);
   padding: 60px 20px;
   text-align: center;
   border-radius: 16px;
@@ -177,6 +177,7 @@
   border: 0;
 }
 
+/* responsive hp */
 @media (max-width: 768px) {
   .about-container {
     padding: 20px;
@@ -198,7 +199,24 @@
     height: 140px;
   }
 
+  .image-row {
+    grid-template-columns: 1fr;
+  }
+
+  .team-card {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .team-photo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .about-team h2,
   .about-location h2 {
+    margin-top: 40px;
     font-size: 22px;
   }
 

@@ -5,37 +5,46 @@
   margin-top: 50px;
 }
 
+.section-title {
+  font-size: 27px;
+  font-weight: bold;
+  color: #000000;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
 .gauge-section {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 10px; /* jarak antara chart dan legend */
-  flex-wrap: wrap;
+  gap: 10px; /* Jarak antara gauge dan legend */
+  flex-wrap: wrap; /* responsive */
   margin-bottom: 2rem;
 }
 
 .gauge-box {
-  max-width: 400px;
-  background-color: #fff;
+  max-width: 420px;
+  background-color: #ffffff;
   padding: 1.5rem;
   border-radius: 1rem;
   box-shadow: 0 6px 12px rgba(0,0,0,0.05);
   text-align: center;
   flex: 1;
+  font-weight: 500;
 }
 
 .gauge-title {
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: bold;
   margin-bottom: 1rem;
 }
 
-.section-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #1f2937;
-  margin-top: 1.5rem;
-  text-align: center;
+.gauge-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
 .ph-labels {
@@ -45,21 +54,8 @@
   gap: 10px;
   max-width: 400px;
   margin: 10px auto 0;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: bold;
-}
-
-.label-item {
-  flex: 1;
-  text-align: center;
-}
-
-.gauge-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
 }
 
 .ph-legend {
@@ -71,7 +67,7 @@
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   height: fit-content;
-  margin-top: 3rem; /* sejajarkan legend dengan chart */
+  margin-top: 48px; /* sejajarkan legend dengan chart */
 }
 
 .legend-item { /* isi legend */
@@ -79,15 +75,15 @@
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  font-weight: 500;
-  color: #333;
+  font-weight: bold;
+  color: #000000;
 }
 
 .legend-color {
   width: 18px;
   height: 18px;
   border-radius: 4px;
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
 }
 
 .button-group {
@@ -100,8 +96,8 @@
 .tab-button {
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
-  font-weight: 500;
-  border: 1px solid #ccc;
+  font-weight: bold;
+  border: 1px solid #cccccc;
   background-color: #e5e7eb;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -112,9 +108,9 @@
 }
 
 .tab-button.active {
-  background-color: #3b82f6;
+  background-color: #27bdb1;
   color: white;
-  border-color: #3b82f6;
+  border-color: #27bdb1;
 }
 
 .log-table {
@@ -200,4 +196,64 @@ th {
 .close-btn:hover {
   color: #ff0000;
   transform: scale(1.2);
+}
+
+/* responsive hp */
+@media (max-width: 768px) {
+  .gauge-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .gauge-box {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .ph-legend {
+    margin-top: 20px;
+    align-items: center;
+  }
+
+  .log-table {
+    padding: 0.5rem;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tab-button {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  .table-image {
+    width: 100px;
+  }
+
+  .ph-labels {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .fullscreen-img {
+    max-width: 95vw;
+    max-height: 90vh;
+  }
+
+  .close-btn {
+    top: 10px;
+    right: 16px;
+    font-size: 28px;
+  }
 }

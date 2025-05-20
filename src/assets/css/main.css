@@ -16,7 +16,7 @@ body {
     --color-text: #231942;
     --navbar-color: #ffffff;
     --navbar-color-text: #000000;
-    --navbar-container: #27BDB1;
+    --navbar-container: #27bdb1;
   }
 
 /* style navbar */
@@ -32,7 +32,7 @@ body {
 .navbar.color-active {
   background-color: var(--navbar-color);  /* Gunakan warna solid yang sama di sini */
   padding: 8px 0;
-  border-bottom: 2px solid #4090CE;
+  border-bottom: 2px solid #27BDB1;
 }
 
 .navbar .nav-link a {

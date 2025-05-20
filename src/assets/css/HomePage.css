@@ -228,7 +228,7 @@ body {
   }
 }
   
-/* Keyframes untuk berbagai animasi */
+/* animasi buka website */
 @keyframes fadeSlideIn {
   0% {
     opacity: 0;
