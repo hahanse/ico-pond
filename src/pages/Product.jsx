@@ -6,75 +6,100 @@ import "../assets/css/Product.css";
 const socket = io("http://localhost:3000");
 
 const initialPakanData = [
-  { no: 1, waktu: "5 Mei 2025, 10:00", keterangan: "Terjadi hujan", aksi: "Pemberian pakan dan pupuk ditunda"},
-  { no: 2, waktu: "6 Mei 2025, 09:30", keterangan: "Hujan sudah reda", aksi: "Pupuk telah diberikan"},
-  { no: 3, waktu: "7 Mei 2025, 08:45", keterangan: "pH kolam asam", aksi: "Pupuk telah diberikan"},
-  { no: 4, waktu: "9 Mei 2025, 10:15", keterangan: "Hujan reda sudah 1 jam", aksi: "pakan telah diberikan"},
+  { no: 1, waktu: "5 Mei 2025, 10:00", keterangan: "Pakan telah diberikan", aksi: "Servo pemberi pakan berjalan" },
+  { no: 2, waktu: "6 Mei 2025, 09:30", keterangan: "Pupuk telah diberikan", aksi: "Manual" },
+  { no: 3, waktu: "7 Mei 2025, 08:45", keterangan: "Pupuk telah diberikan", aksi: "Manual" },
+  { no: 4, waktu: "9 Mei 2025, 10:15", keterangan: "Pakan telah diberikan", aksi: "Servo pemberi pakan berjalan" },
 ];
 
 const Product = () => {
   const [activeTab, setActiveTab] = useState("hama");
   const [phValue, setPhValue] = useState(7);
   const [hamaData, setHamaData] = useState([]);
-  const [pakanData] = useState(initialPakanData);
+  const [pakanData, setPakanData] = useState([]);
   const [fullscreenImg, setFullscreenImg] = useState(null);
+
   const openFullscreen = (imgSrc) => setFullscreenImg(imgSrc);
   const closeFullscreen = () => setFullscreenImg(null);
 
+  // Ambil data dari localStorage saat komponen pertama kali dirender
   useEffect(() => {
-    // Ambil 10 gambar terbaru saat load
-    fetch("http://localhost:3000/")
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.imageUrls && data.imageUrls.length > 0) {
-          const formattedData = data.imageUrls.slice(0, 10).map((item, index) => ({
-            no: index + 1,
-            waktu: new Date(item.timestamp).toLocaleString("id-ID", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-            keterangan: "Terdeteksi gerakan hama burung",
-            imageUrl: item.url,
-          }));
-          setHamaData(formattedData);
-        }
-      })
-      .catch((error) => console.error("Error fetching images:", error));
+    const savedHama = localStorage.getItem("hamaData");
+    const savedPakan = localStorage.getItem("pakanData");
 
-    // Dengar update pH
+    if (savedHama) {
+      setHamaData(JSON.parse(savedHama));
+    } else {
+      // Fetch awal jika belum ada data tersimpan
+      fetch("http://localhost:3000/")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.imageUrls?.length > 0) {
+            const formatted = data.imageUrls.slice(0, 10).map((item, index) => ({
+              no: index + 1,
+              waktu: new Date(item.timestamp).toLocaleString("id-ID", {
+                day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
+              }),
+              keterangan: "Terdeteksi gerakan hama burung",
+              imageUrl: item.url,
+            }));
+            setHamaData(formatted);
+            localStorage.setItem("hamaData", JSON.stringify(formatted));
+          }
+        });
+    }
+
+    if (savedPakan) {
+      setPakanData(JSON.parse(savedPakan));
+    } else {
+      setPakanData(initialPakanData);
+      localStorage.setItem("pakanData", JSON.stringify(initialPakanData));
+    }
+
+    // Dengar pH
     socket.on("phUpdate", (newPhValue) => {
       console.log("pH diterima dari server:", newPhValue);
       setPhValue(newPhValue);
     });
 
     // Dengar gambar baru
-    socket.on("newImageUrl", (data) => {
-      const { url, timestamp } = data;
+    socket.on("newImageUrl", ({ url, timestamp }) => {
       const newData = {
         no: 1,
         waktu: new Date(timestamp).toLocaleString("id-ID", {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
+          day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
         }),
         keterangan: "Terdeteksi gerakan hama",
         imageUrl: url,
       };
 
       setHamaData((prev) => {
-        const updated = [newData, ...prev].slice(0, 10);
-        return updated.map((item, index) => ({ ...item, no: index + 1 }));
+        const updated = [newData, ...prev].slice(0, 10).map((item, index) => ({ ...item, no: index + 1 }));
+        localStorage.setItem("hamaData", JSON.stringify(updated));
+        return updated;
+      });
+    });
+
+    // Dengar log servo
+    socket.on("servoLog", ({ waktu }) => {
+      const newLog = {
+        no: 1,
+        waktu,
+        keterangan: "Pakan telah diberikan",
+        aksi: "Servo pemberi pakan berjalan",
+      };
+
+      setPakanData((prev) => {
+        const updated = [newLog, ...prev].slice(0, 10).map((item, index) => ({ ...item, no: index + 1 }));
+        localStorage.setItem("pakanData", JSON.stringify(updated));
+        return updated;
       });
     });
 
     return () => {
       socket.off("phUpdate");
       socket.off("newImageUrl");
+      socket.off("servoLog");
     };
   }, []);
 
@@ -85,7 +110,7 @@ const Product = () => {
       <div className="text-center my-6">
         <h2 className="section-title text-2xl font-bold mb-4">Monitoring</h2>
       </div>
-      
+
       <div className="gauge-section">
         <div className="gauge-box">
           <h3 className="gauge-title">pH</h3>
@@ -113,36 +138,30 @@ const Product = () => {
 
         <div className="ph-legend">
           <div className="legend-item">
-            <span className="legend-color" style={{ backgroundColor: "#ff0000"}}></span>2–4
+            <span className="legend-color" style={{ backgroundColor: "#ff0000" }}></span>2–4
           </div>
           <div className="legend-item">
-            <span className="legend-color" style={{ backgroundColor: "#ffa500"}}></span>4–6
+            <span className="legend-color" style={{ backgroundColor: "#ffa500" }}></span>4–6
           </div>
           <div className="legend-item">
-            <span className="legend-color" style={{ backgroundColor: "#00ff00"}}></span>6–8
+            <span className="legend-color" style={{ backgroundColor: "#00ff00" }}></span>6–8
           </div>
           <div className="legend-item">
-            <span className="legend-color" style={{ backgroundColor: "#00bfff"}}></span>8–10
+            <span className="legend-color" style={{ backgroundColor: "#00bfff" }}></span>8–10
           </div>
           <div className="legend-item">
-            <span className="legend-color" style={{ backgroundColor: "#800080"}}></span>10–12
+            <span className="legend-color" style={{ backgroundColor: "#800080" }}></span>10–12
           </div>
         </div>
       </div>
-        
+
       <h2 className="section-title mt-8">Riwayat Aktivitas Kolam</h2>
 
       <div className="button-group">
-        <button
-          className={`tab-button ${activeTab === "hama" ? "active" : ""}`}
-          onClick={() => setActiveTab("hama")}
-        >
+        <button className={`tab-button ${activeTab === "hama" ? "active" : ""}`} onClick={() => setActiveTab("hama")}>
           Deteksi Hama Burung
         </button>
-        <button
-          className={`tab-button ${activeTab === "pakan" ? "active" : ""}`}
-          onClick={() => setActiveTab("pakan")}
-        >
+        <button className={`tab-button ${activeTab === "pakan" ? "active" : ""}`} onClick={() => setActiveTab("pakan")}>
           Cek Pakan & Pupuk
         </button>
       </div>
@@ -161,9 +180,7 @@ const Product = () => {
             {activityData.length === 0 ? (
               <tr>
                 <td colSpan="4" style={{ textAlign: "center" }}>
-                  {activeTab === "hama"
-                    ? "Belum ada deteksi hama"
-                    : "Belum ada riwayat pakan atau pupuk"}
+                  {activeTab === "hama" ? "Belum ada deteksi hama" : "Belum ada riwayat pakan atau pupuk"}
                 </td>
               </tr>
             ) : (
@@ -182,17 +199,18 @@ const Product = () => {
                       />
                     ) : (
                       row.aksi
-                    ) }
+                    )}
                   </td>
                 </tr>
               ))
             )}
           </tbody>
         </table>
+
         {fullscreenImg && (
           <div className="fullscreen-overlay" onClick={closeFullscreen}>
             <button className="close-btn" onClick={closeFullscreen}>×</button>
-            <img src={fullscreenImg} alt="Fullscreen" className="fullscreen-img"/>
+            <img src={fullscreenImg} alt="Fullscreen" className="fullscreen-img" />
           </div>
         )}
       </div>
