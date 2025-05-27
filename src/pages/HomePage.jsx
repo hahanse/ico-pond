@@ -46,7 +46,7 @@ function HomePage() {
     },
     {
       image: kembangbiak,
-      text: 'Perkembangbiakan Optimal'
+      text: 'Pengaturan Lingkungan Kolam Ideal'
     },
     {
       image: perlindungan, 
@@ -54,7 +54,7 @@ function HomePage() {
     },
     {
       image: manusia,
-      text: 'Hemat Sumber Daya Manusia'
+      text: 'Efisiensi Tenaga Kerja'
     },
   ];
 

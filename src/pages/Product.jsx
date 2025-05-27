@@ -210,60 +210,76 @@ const Product = () => {
 
       <h2 className="section-title mt-8">Riwayat Aktivitas Kolam</h2>
 
-      <div className="button-group">
-        <button className={`tab-button ${activeTab === "hama" ? "active" : ""}`} onClick={() => setActiveTab("hama")}>
+       <div className="button-group">
+        <button
+          className={`tab-button ${activeTab === "hama" ? "active" : ""}`}
+          onClick={() => setActiveTab("hama")}
+        >
           Deteksi Hama Burung
         </button>
-        <button className={`tab-button ${activeTab === "pakan" ? "active" : ""}`} onClick={() => setActiveTab("pakan")}>
+        <button
+          className={`tab-button ${activeTab === "pakan" ? "active" : ""}`}
+          onClick={() => setActiveTab("pakan")}
+        >
           Cek Pakan & Pupuk
         </button>
       </div>
 
-      <table className="data-table">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Waktu</th>
-            <th>Keterangan</th>
-            {activeTab === "pakan" && <th>Aksi</th>}
-            {activeTab === "hama" && <th>Gambar</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {activityData.length === 0 && (
-            <tr><td colSpan={activeTab === "pakan" ? 4 : 4} style={{ textAlign: "center" }}>Tidak ada data</td></tr>
-          )}
-          {activityData.map((item) => (
-            <tr key={item.no}>
-              <td>{item.no}</td>
-              <td>{item.waktu}</td>
-              <td>{item.keterangan}</td>
-              {activeTab === "pakan" && <td>{item.aksi}</td>}
-              {activeTab === "hama" && (
-                <td>
-                  {item.imageUrl ? (
-                    <img
-                      src={item.imageUrl}
-                      alt="Hama burung"
-                      style={{ width: "80px", cursor: "pointer" }}
-                      onClick={() => openFullscreen(item.imageUrl)}
-                    />
-                  ) : (
-                    "-"
-                  )}
-                </td>
-              )}
+      <div className="log-table">
+        <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Waktu</th>
+              <th>Keterangan</th>
+              {activeTab === "pakan" && <th>Aksi</th>}
+              {activeTab === "hama" && <th>Gambar</th>}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {activityData.length === 0 && (
+              <tr>
+                <td colSpan={4} style={{ textAlign: "center" }}>
+                  Tidak ada data
+                </td>
+              </tr>
+            )}
+            {activityData.map((row) => (
+              <tr key={row.no}>
+                <td>{row.no}</td>
+                <td>{row.waktu}</td>
+                <td>{row.keterangan}</td>
+                {activeTab === "pakan" && (
+                  <td style={{ textAlign: "center" }}>{row.aksi}</td>
+                )}
+
+                {activeTab === "hama" && (
+                  <td style={{ textAlign: "center" }}>
+                    {row.imageUrl ? (
+                      <img
+                        src={row.imageUrl}
+                        alt="Hama"
+                        className="table-image"
+                        onClick={() => openFullscreen(row.imageUrl)}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
       {fullscreenImg && (
-        <div className="fullscreen-overlay" onClick={closeFullscreen}>
-          <img src={fullscreenImg} alt="Fullscreen" className="fullscreen-img" />
-        </div>
-      )}
+          <div className="fullscreen-overlay" onClick={closeFullscreen}>
+            <button className="close-btn" onClick={closeFullscreen}>×</button>
+            <img src={fullscreenImg} alt="Fullscreen" className="fullscreen-img"/>
+          </div>
+        )}
     </div>
+  </div>
   );
 };
 
