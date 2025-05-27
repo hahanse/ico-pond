@@ -7,8 +7,8 @@ const socket = io("http://localhost:3000");
 
 const initialPakanData = [
   { no: 1, waktu: "5 Mei 2025, 10:00", keterangan: "Pakan telah diberikan", aksi: "Servo pemberi pakan berjalan" },
-  { no: 2, waktu: "6 Mei 2025, 09:30", keterangan: "Pupuk telah diberikan", aksi: "Manual" },
-  { no: 3, waktu: "7 Mei 2025, 08:45", keterangan: "Pupuk telah diberikan", aksi: "Manual" },
+  { no: 2, waktu: "6 Mei 2025, 09:30", keterangan: "Pupuk telah diberikan", aksi: "Servo pemberi pupuk berjalan" },
+  { no: 3, waktu: "7 Mei 2025, 08:45", keterangan: "Pupuk telah diberikan", aksi: "Servo pemberi pupuk berjalan" },
   { no: 4, waktu: "9 Mei 2025, 10:15", keterangan: "Pakan telah diberikan", aksi: "Servo pemberi pakan berjalan" },
 ];
 
@@ -22,16 +22,15 @@ const Product = () => {
   const openFullscreen = (imgSrc) => setFullscreenImg(imgSrc);
   const closeFullscreen = () => setFullscreenImg(null);
 
-  // Ambil data dari localStorage saat komponen pertama kali dirender
   useEffect(() => {
     const savedHama = localStorage.getItem("hamaData");
-    const savedPakan = localStorage.getItem("pakanData");
-
     if (savedHama) {
       setHamaData(JSON.parse(savedHama));
-    } else {
-      // Fetch awal jika belum ada data tersimpan
-      fetch("http://localhost:3000/")
+    }
+    const savedPakan = localStorage.getItem("pakanData");
+
+    const fetchHamaData = () => {
+      fetch("http://localhost:3000")
         .then((res) => res.json())
         .then((data) => {
           if (data.imageUrls?.length > 0) {
@@ -46,30 +45,52 @@ const Product = () => {
             setHamaData(formatted);
             localStorage.setItem("hamaData", JSON.stringify(formatted));
           }
-        });
+        })
+        .catch((err) => console.error("Gagal fetch gambar:", err));
+    };
+    fetchHamaData();
+    if (savedHama) {
+      setHamaData(JSON.parse(savedHama));
+    } else {
+      fetchHamaData();
     }
 
     if (savedPakan) {
       setPakanData(JSON.parse(savedPakan));
     } else {
-      setPakanData(initialPakanData);
-      localStorage.setItem("pakanData", JSON.stringify(initialPakanData));
+      fetch("https://script.google.com/macros/s/AKfycbzPq6gjMC0_3jDuwKFc5JgLqNg-pQ6QWizkPtdxPlgeIPytyHkla5BpLjER5CQVMQLp/exec")
+        .then((res) => res.json())
+        .then((sheetData) => {
+          const formatted = sheetData.map((item, index) => ({
+            no: index + 1,
+            waktu: new Date(item.waktu).toLocaleString("id-ID", {
+              day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
+            }),
+            keterangan: item.keterangan,
+            aksi: item.aksi,
+          }));
+          setPakanData(formatted);
+          localStorage.setItem("pakanData", JSON.stringify(formatted));
+        })
+        .catch(() => {
+          setPakanData(initialPakanData);
+          localStorage.setItem("pakanData", JSON.stringify(initialPakanData));
+        });
     }
 
-    // Dengar pH
+    const interval = setInterval(fetchHamaData, 5 * 60 * 1000);
+
     socket.on("phUpdate", (newPhValue) => {
-      console.log("pH diterima dari server:", newPhValue);
       setPhValue(newPhValue);
     });
 
-    // Dengar gambar baru
     socket.on("newImageUrl", ({ url, timestamp }) => {
       const newData = {
         no: 1,
         waktu: new Date(timestamp).toLocaleString("id-ID", {
           day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
         }),
-        keterangan: "Terdeteksi gerakan hama",
+        keterangan: "Terdeteksi gerakan hama burung",
         imageUrl: url,
       };
 
@@ -80,13 +101,12 @@ const Product = () => {
       });
     });
 
-    // Dengar log servo
-    socket.on("servoLog", ({ waktu }) => {
+    socket.on("servoLog", ({ waktu, jenis }) => {
       const newLog = {
         no: 1,
         waktu,
-        keterangan: "Pakan telah diberikan",
-        aksi: "Servo pemberi pakan berjalan",
+        keterangan: jenis === "pakan" ? "Pakan telah diberikan" : "Pupuk telah diberikan",
+        aksi: jenis === "pakan" ? "Servo pemberi pakan berjalan" : "Servo pemberi pupuk berjalan",
       };
 
       setPakanData((prev) => {
@@ -97,6 +117,7 @@ const Product = () => {
     });
 
     return () => {
+      clearInterval(interval);
       socket.off("phUpdate");
       socket.off("newImageUrl");
       socket.off("servoLog");
@@ -137,21 +158,11 @@ const Product = () => {
         </div>
 
         <div className="ph-legend">
-          <div className="legend-item">
-            <span className="legend-color" style={{ backgroundColor: "#ff0000" }}></span>2–4
-          </div>
-          <div className="legend-item">
-            <span className="legend-color" style={{ backgroundColor: "#ffa500" }}></span>4–6
-          </div>
-          <div className="legend-item">
-            <span className="legend-color" style={{ backgroundColor: "#00ff00" }}></span>6–8
-          </div>
-          <div className="legend-item">
-            <span className="legend-color" style={{ backgroundColor: "#00bfff" }}></span>8–10
-          </div>
-          <div className="legend-item">
-            <span className="legend-color" style={{ backgroundColor: "#800080" }}></span>10–12
-          </div>
+          <div className="legend-item"><span className="legend-color" style={{ backgroundColor: "#ff0000" }}></span>2–4</div>
+          <div className="legend-item"><span className="legend-color" style={{ backgroundColor: "#ffa500" }}></span>4–6</div>
+          <div className="legend-item"><span className="legend-color" style={{ backgroundColor: "#00ff00" }}></span>6–8</div>
+          <div className="legend-item"><span className="legend-color" style={{ backgroundColor: "#00bfff" }}></span>8–10</div>
+          <div className="legend-item"><span className="legend-color" style={{ backgroundColor: "#800080" }}></span>10–12</div>
         </div>
       </div>
 
