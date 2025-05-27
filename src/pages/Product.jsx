@@ -116,11 +116,53 @@ const Product = () => {
       });
     });
 
+    // Tambahan: Terima event peringatan hujan
+    socket.on("curahHujanUpdate", (status) => {
+      const waktu = new Date().toLocaleString("id-ID", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+    
+      if (status.toLowerCase() === "hujan") {
+        const newLog = {
+          no: 1,
+          waktu,
+          keterangan: "Peringatan: hujan terdeteksi",
+          aksi: "pemberian pakan ditunda",
+        };
+    
+        setPakanData((prev) => {
+          const updated = [newLog, ...prev].slice(0, 10).map((item, index) => ({ ...item, no: index + 1 }));
+          localStorage.setItem("pakanData", JSON.stringify(updated));
+          return updated;
+        });
+      } else if (status.toLowerCase() === "tidak") {
+        const newLog = {
+          no: 1,
+          waktu,
+          keterangan: "Hujan telah berhenti",
+          aksi: "pemberian pakan dapat dilanjutkan",
+        };
+    
+        setPakanData((prev) => {
+          const updated = [newLog, ...prev].slice(0, 10).map((item, index) => ({ ...item, no: index + 1 }));
+          localStorage.setItem("pakanData", JSON.stringify(updated));
+          return updated;
+        });
+      }
+    });
+    
+
     return () => {
       clearInterval(interval);
       socket.off("phUpdate");
       socket.off("newImageUrl");
       socket.off("servoLog");
+      socket.off("curahHujanUpdate");
     };
   }, []);
 
@@ -177,54 +219,50 @@ const Product = () => {
         </button>
       </div>
 
-      <div className="log-table">
-        <table>
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Waktu</th>
-              <th>Keterangan</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            {activityData.length === 0 ? (
-              <tr>
-                <td colSpan="4" style={{ textAlign: "center" }}>
-                  {activeTab === "hama" ? "Belum ada deteksi hama" : "Belum ada riwayat pakan atau pupuk"}
+      <table className="data-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Waktu</th>
+            <th>Keterangan</th>
+            {activeTab === "pakan" && <th>Aksi</th>}
+            {activeTab === "hama" && <th>Gambar</th>}
+          </tr>
+        </thead>
+        <tbody>
+          {activityData.length === 0 && (
+            <tr><td colSpan={activeTab === "pakan" ? 4 : 4} style={{ textAlign: "center" }}>Tidak ada data</td></tr>
+          )}
+          {activityData.map((item) => (
+            <tr key={item.no}>
+              <td>{item.no}</td>
+              <td>{item.waktu}</td>
+              <td>{item.keterangan}</td>
+              {activeTab === "pakan" && <td>{item.aksi}</td>}
+              {activeTab === "hama" && (
+                <td>
+                  {item.imageUrl ? (
+                    <img
+                      src={item.imageUrl}
+                      alt="Hama burung"
+                      style={{ width: "80px", cursor: "pointer" }}
+                      onClick={() => openFullscreen(item.imageUrl)}
+                    />
+                  ) : (
+                    "-"
+                  )}
                 </td>
-              </tr>
-            ) : (
-              activityData.map((row) => (
-                <tr key={row.no}>
-                  <td>{row.no}</td>
-                  <td>{row.waktu}</td>
-                  <td>{row.keterangan}</td>
-                  <td>
-                    {activeTab === "hama" && row.imageUrl ? (
-                      <img
-                        src={row.imageUrl}
-                        alt="Hama"
-                        className="table-image"
-                        onClick={() => openFullscreen(row.imageUrl)}
-                      />
-                    ) : (
-                      row.aksi
-                    )}
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
-        {fullscreenImg && (
-          <div className="fullscreen-overlay" onClick={closeFullscreen}>
-            <button className="close-btn" onClick={closeFullscreen}>×</button>
-            <img src={fullscreenImg} alt="Fullscreen" className="fullscreen-img" />
-          </div>
-        )}
-      </div>
+      {fullscreenImg && (
+        <div className="fullscreen-overlay" onClick={closeFullscreen}>
+          <img src={fullscreenImg} alt="Fullscreen" className="fullscreen-img" />
+        </div>
+      )}
     </div>
   );
 };
