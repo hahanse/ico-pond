@@ -102,6 +102,14 @@ const Product = () => {
     });
 
     socket.on("servoLog", ({ waktu, jenis }) => {
+      const waktu = new Date().toLocaleString("id-ID", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
       const newLog = {
         no: 1,
         waktu,
