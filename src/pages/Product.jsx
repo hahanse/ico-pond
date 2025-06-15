@@ -102,7 +102,6 @@ const Product = () => {
     });
 
     socket.on("servoLog", ({ waktu, jenis }) => {
-
       const newLog = {
         no: 1,
         waktu,
