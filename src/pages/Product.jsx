@@ -104,9 +104,7 @@ const Product = () => {
     socket.on("servoLog", ({ waktu, jenis }) => {
       const newLog = {
         no: 1,
-        waktu: new Date(item.waktu).toLocaleString("id-ID", {
-          day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
-        }), 
+        waktu, 
         keterangan: jenis === "pakan" ? "Pakan telah diberikan" : "Pupuk telah diberikan",
         aksi: jenis === "pakan" ? "Servo pemberi pakan berjalan" : "Servo pemberi pupuk berjalan",
       };
