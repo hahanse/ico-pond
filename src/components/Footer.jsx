@@ -22,7 +22,7 @@ function Footer() {
         <div className="footer-contact">
           <h4>Kontak</h4>
           <p>Email: icooopondd@email.com</p>
-          <p>Telp: +62 812-3456-7890</p>
+          <p>Telp: +62 895-1032-8573</p>
         </div>
       </div>
       <div className="footer-bottom">
