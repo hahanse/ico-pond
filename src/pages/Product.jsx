@@ -3,7 +3,7 @@ import GaugeChart from "react-gauge-chart";
 import io from "socket.io-client";
 import "../assets/css/Product.css";
 
-const socket = io("deployta-production-2a69.up.railway.app/");
+const socket = io("https://deployta-production-2a69.up.railway.app//");
 
 const initialPakanData = [
   { no: 1, waktu: "5 Mei 2025, 10:00", keterangan: "Pakan telah diberikan", aksi: "Servo pemberi pakan berjalan" },
@@ -30,7 +30,7 @@ const Product = () => {
     const savedPakan = localStorage.getItem("pakanData");
 
     const fetchHamaData = () => {
-      fetch("deployta-production-2a69.up.railway.app/")
+      fetch("https://deployta-production-2a69.up.railway.app//")
         .then((res) => res.json())
         .then((data) => {
           if (data.imageUrls?.length > 0) {
