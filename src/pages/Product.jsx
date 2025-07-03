@@ -55,7 +55,7 @@ const Product = () => {
     if (savedPakan) {
       setPakanData(JSON.parse(savedPakan));
     } else {
-      fetch("https://script.google.com/macros/s/AKfycbzPq6gjMC0_3jDuwKFc5JgLqNg-pQ6QWizkPtdxPlgeIPytyHkla5BpLjER5CQVMQLp")
+      fetch("https://script.google.com/macros/s/AKfycby3jl4dIBVaSv_Zk9yq7KVXXXNbX2OpEtTsPTkNCMrkRfajV9HjegNN427YaPK6uHua/exec")
         .then((res) => res.json())
         .then((sheetData) => {
           const formatted = sheetData.map((item, index) => ({
