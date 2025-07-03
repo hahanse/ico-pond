@@ -101,7 +101,21 @@ const Product = () => {
       });
     });
 
-   
+    socket.on("servoLog", ({ waktu, jenis }) => {
+      const newLog = {
+        no: 1,
+        waktu, 
+        keterangan: jenis === "pakan" ? "Pakan telah diberikan" : "Pupuk telah diberikan",
+        aksi: jenis === "pakan" ? "Servo pemberi pakan berjalan" : "Servo pemberi pupuk berjalan",
+      };
+
+      setPakanData((prev) => {
+        const updated = [newLog, ...prev].slice(0, 10).map((item, index) => ({ ...item, no: index + 1 }));
+        localStorage.setItem("pakanData", JSON.stringify(updated));
+        return updated;
+      });
+    });
+
     // Tambahan: Terima event peringatan hujan
     socket.on("curahHujanUpdate", (status) => {
       const waktu = new Date().toLocaleString("id-ID", {
