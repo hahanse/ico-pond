@@ -54,9 +54,7 @@ const Product = () => {
       fetchHamaData();
     }
 
-    if (savedPakan) {
-      setPakanData(JSON.parse(savedPakan));
-    } else fetch("https://log-servo-default-rtdb.firebaseio.com/servoLogs.json")
+   fetch("https://log-servo-default-rtdb.firebaseio.com/servoLogs.json")
     .then((res) => res.json())
     .then((firebaseData) => {
       const entries = Object.values(firebaseData || {});
