@@ -57,26 +57,38 @@ const Product = () => {
 
     if (savedPakan) {
       setPakanData(JSON.parse(savedPakan));
-    } else {
-      fetch("https://script.google.com/macros/s/AKfycbzPq6gjMC0_3jDuwKFc5JgLqNg-pQ6QWizkPtdxPlgeIPytyHkla5BpLjER5CQVMQLp/exec")
-        .then((res) => res.json())
-        .then((sheetData) => {
-          const formatted = sheetData.map((item, index) => ({
-            no: index + 1,
-            waktu: new Date(item.waktu).toLocaleString("id-ID", {
-              day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
-            }),
-            keterangan: item.keterangan,
-            aksi: item.aksi,
-          }));
-          setPakanData(formatted);
-          localStorage.setItem("pakanData", JSON.stringify(formatted));
-        })
-        .catch(() => {
-          setPakanData(initialPakanData);
-          localStorage.setItem("pakanData", JSON.stringify(initialPakanData));
-        });
-    }
+    } else fetch("https://log-servo-default-rtdb.firebaseio.com/servoLogs.json")
+    .then((res) => res.json())
+    .then((firebaseData) => {
+      const entries = Object.values(firebaseData || {});
+      const formatted = entries
+        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+        .map((item, index) => ({
+          no: index + 1,
+          waktu: new Date(item.timestamp).toLocaleString("id-ID", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+          keterangan:
+            item.jenis === "pakan"
+              ? "Pakan telah diberikan"
+              : "Pupuk telah diberikan",
+          aksi:
+            item.jenis === "pakan"
+              ? "Servo pemberi pakan berjalan"
+              : "Servo pemberi pupuk berjalan",
+        }));
+      setPakanData(formatted);
+      localStorage.setItem("pakanData", JSON.stringify(formatted));
+    })
+    .catch(() => {
+      setPakanData(initialPakanData);
+      localStorage.setItem("pakanData", JSON.stringify(initialPakanData));
+    });
+  
 
     const interval = setInterval(fetchHamaData, 5 * 60 * 1000);
 
