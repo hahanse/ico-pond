@@ -152,7 +152,7 @@ const Product = () => {
     
         setPakanData((prev) => {
           const updated = [newLog, ...prev].slice(0, 10).map((item, index) => ({ ...item, no: index + 1 }));
-          localStorage.setItem("pakanData", JSON.stringify(updated));
+          
           return updated;
         });
       } else if (status.toLowerCase() === "tidak") {
@@ -165,7 +165,7 @@ const Product = () => {
     
         setPakanData((prev) => {
           const updated = [newLog, ...prev].slice(0, 10).map((item, index) => ({ ...item, no: index + 1 }));
-          localStorage.setItem("pakanData", JSON.stringify(updated));
+          
           return updated;
         });
       }
