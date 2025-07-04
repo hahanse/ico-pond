@@ -27,7 +27,6 @@ const Product = () => {
     if (savedHama) {
       setHamaData(JSON.parse(savedHama));
     }
-    const savedPakan = localStorage.getItem("pakanData");
 
     const fetchHamaData = () => {
       fetch("https://deployta-production-2a69.up.railway.app/")
