@@ -113,21 +113,24 @@ const Product = () => {
       });
     });
 
-    socket.on("servoLog", ({ waktu, jenis }) => {
-      const newLog = {
-        no: 1,
-        waktu, 
-        keterangan: jenis === "pakan" ? "Pakan telah diberikan" : "Pupuk telah diberikan",
-        aksi: jenis === "pakan" ? "Servo pemberi pakan berjalan" : "Servo pemberi pupuk berjalan",
-      };
-
-      setPakanData((prev) => {
-        const updated = [newLog, ...prev].slice(0, 10).map((item, index) => ({ ...item, no: index + 1 }));
-        localStorage.setItem("pakanData", JSON.stringify(updated));
-        return updated;
-      });
+    socket.on("servoLog", () => {
+      fetch("https://log-servo-default-rtdb.firebaseio.com/servoLogs.json")
+        .then((res) => res.json())
+        .then((firebaseData) => {
+          const entries = Object.values(firebaseData || {});
+          const formatted = entries
+            .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+            .map((item, index) => ({
+              no: index + 1,
+              waktu: new Date(item.timestamp).toLocaleString("id-ID", {
+                day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
+              }),
+              keterangan: item.jenis === "pakan" ? "Pakan telah diberikan" : "Pupuk telah diberikan",
+              aksi: item.jenis === "pakan" ? "Servo pemberi pakan berjalan" : "Servo pemberi pupuk berjalan",
+            }));
+          setPakanData(formatted);
+        });
     });
-
     // Tambahan: Terima event peringatan hujan
     socket.on("curahHujanUpdate", (status) => {
       const waktu = new Date().toLocaleString("id-ID", {
