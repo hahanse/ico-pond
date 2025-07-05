@@ -59,8 +59,26 @@ const Product = () => {
     .then((firebaseData) => {
       const entries = Object.values(firebaseData || {});
       const formatted = entries
-        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
-        .map((item, index) => ({
+      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+      .map((item, index) => {
+        let keterangan = "";
+        let aksi = "";
+    
+        if (item.jenis === "pakan") {
+          keterangan = "Pakan telah diberikan";
+          aksi = "Servo pemberi pakan berjalan";
+        } else if (item.jenis === "pupuk") {
+          keterangan = "Pupuk telah diberikan";
+          aksi = "Servo pemberi pupuk berjalan";
+        } else if (item.status === "hujan") {
+          keterangan = "Peringatan: hujan terdeteksi";
+          aksi = "pemberian pakan ditunda";
+        } else if (item.status === "tidak") {
+          keterangan = "Hujan telah berhenti";
+          aksi = "pemberian pakan dapat dilanjutkan";
+        }
+    
+        return {
           no: index + 1,
           waktu: new Date(item.timestamp).toLocaleString("id-ID", {
             day: "numeric",
@@ -69,15 +87,11 @@ const Product = () => {
             hour: "2-digit",
             minute: "2-digit",
           }),
-          keterangan:
-            item.jenis === "pakan"
-              ? "Pakan telah diberikan"
-              : "Pupuk telah diberikan",
-          aksi:
-            item.jenis === "pakan"
-              ? "Servo pemberi pakan berjalan"
-              : "Servo pemberi pupuk berjalan",
-        }));
+          keterangan,
+          aksi,
+        };
+      });
+    
       setPakanData(formatted);
       localStorage.setItem("pakanData", JSON.stringify(formatted));
     })
