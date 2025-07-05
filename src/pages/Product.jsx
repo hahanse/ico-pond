@@ -54,43 +54,45 @@ const Product = () => {
       fetchHamaData();
     }
 
-   fetch("https://log-servo-default-rtdb.firebaseio.com/servoLogs.json")
+    fetch("https://log-servo-default-rtdb.firebaseio.com/servoLogs.json")
     .then((res) => res.json())
     .then((firebaseData) => {
       const entries = Object.values(firebaseData || {});
       const formatted = entries
-      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
-      .map((item, index) => {
-        let keterangan = "";
-        let aksi = "";
-    
-        if (item.jenis === "pakan") {
-          keterangan = "Pakan telah diberikan";
-          aksi = "Servo pemberi pakan berjalan";
-        } else if (item.jenis === "pupuk") {
-          keterangan = "Pupuk telah diberikan";
-          aksi = "Servo pemberi pupuk berjalan";
-        } else if (item.status === "hujan") {
-          keterangan = "Peringatan: hujan terdeteksi";
-          aksi = "pemberian pakan ditunda";
-        } else if (item.status === "tidak") {
-          keterangan = "Hujan telah berhenti";
-          aksi = "pemberian pakan dapat dilanjutkan";
-        }
-    
-        return {
-          no: index + 1,
-          waktu: new Date(item.timestamp).toLocaleString("id-ID", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
-          keterangan,
-          aksi,
-        };
-      });
+        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+        .map((item, index) => {
+          let keterangan = "";
+          let aksi = "";
+  
+          if (item.jenis === "pakan") {
+            keterangan = "Pakan telah diberikan";
+            aksi = "Servo pemberi pakan berjalan";
+          } else if (item.jenis === "pupuk") {
+            keterangan = "Pupuk telah diberikan";
+            aksi = "Servo pemberi pupuk berjalan";
+          } else if (item.status === "hujan") {
+            keterangan = "Peringatan: hujan terdeteksi";
+            aksi = "pemberian pakan ditunda";
+          } else if (item.status === "tidak") {
+            keterangan = "Hujan telah berhenti";
+            aksi = "pemberian pakan dapat dilanjutkan";
+          }
+  
+          return {
+            no: index + 1,
+            waktu: new Date(item.timestamp).toLocaleString("id-ID", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+            keterangan,
+            aksi,
+          };
+        })
+        .slice(0, 15); // Batasi data sampai 15 item
+  
     
       setPakanData(formatted);
       localStorage.setItem("pakanData", JSON.stringify(formatted));
