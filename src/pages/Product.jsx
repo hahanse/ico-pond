@@ -36,7 +36,7 @@ const Product = () => {
         .then((res) => res.json())
         .then((data) => {
           if (data.imageUrls?.length > 0) {
-            const formatted = data.imageUrls.slice(0, 10).map((item, index) => ({
+            const formatted = data.imageUrls.slice(0, 100).map((item, index) => ({
               no: index + 1,
               waktu: new Date(item.timestamp).toLocaleString("id-ID", {
                 day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
@@ -123,7 +123,7 @@ const Product = () => {
       };
 
       setHamaData((prev) => {
-        const updated = [newData, ...prev].slice(0, 10).map((item, index) => ({ ...item, no: index + 1 }));
+        const updated = [newData, ...prev].slice(0, 100).map((item, index) => ({ ...item, no: index + 1 }));
         localStorage.setItem("hamaData", JSON.stringify(updated));
         return updated;
       });
@@ -167,7 +167,7 @@ const Product = () => {
         };
     
         setPakanData((prev) => {
-          const updated = [newLog, ...prev].slice(0, 10).map((item, index) => ({ ...item, no: index + 1 }));
+          const updated = [newLog, ...prev].slice(0, 100).map((item, index) => ({ ...item, no: index + 1 }));
           
           return updated;
         });
@@ -180,7 +180,7 @@ const Product = () => {
         };
     
         setPakanData((prev) => {
-          const updated = [newLog, ...prev].slice(0, 10).map((item, index) => ({ ...item, no: index + 1 }));
+          const updated = [newLog, ...prev].slice(0, 100).map((item, index) => ({ ...item, no: index + 1 }));
           
           return updated;
         });
