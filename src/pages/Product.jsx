@@ -22,6 +22,9 @@ const Product = () => {
   const openFullscreen = (imgSrc) => setFullscreenImg(imgSrc);
   const closeFullscreen = () => setFullscreenImg(null);
 
+  const [currentPage, setCurrentPage] = useState(1); // halaman aktif
+  const itemsPerPage = 10; // jumlah item per halaman
+
   useEffect(() => {
     const savedHama = localStorage.getItem("hamaData");
     if (savedHama) {
@@ -91,7 +94,7 @@ const Product = () => {
             aksi,
           };
         })
-        .slice(0, 15); // Batasi data sampai 15 item
+        .slice(0, 100); // Batasi data sampai 100 item
   
     
       setPakanData(formatted);
@@ -194,7 +197,20 @@ const Product = () => {
     };
   }, []);
 
+  // Pilih data sesuai tab aktif
   const activityData = activeTab === "hama" ? hamaData : pakanData;
+
+  // PAGINATION logic
+  const sortedData = [...activityData];
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedData = sortedData
+    .slice(startIndex, endIndex)
+    .map((item, index) => ({
+      ...item,
+      no: startIndex + index + 1
+    }));
+  const totalPages = Math.ceil(sortedData.length / itemsPerPage);
 
   return (
     <div className="product-container">
@@ -241,13 +257,19 @@ const Product = () => {
        <div className="button-group">
         <button
           className={`tab-button ${activeTab === "hama" ? "active" : ""}`}
-          onClick={() => setActiveTab("hama")}
+          onClick={() => {
+            setActiveTab("hama");
+            setCurrentPage(1);
+          }}
         >
           Deteksi Hama Burung
         </button>
         <button
           className={`tab-button ${activeTab === "pakan" ? "active" : ""}`}
-          onClick={() => setActiveTab("pakan")}
+          onClick={() => {
+            setActiveTab("pakan");
+            setCurrentPage(1);
+          }}
         >
           Cek Pakan & Pupuk
         </button>
@@ -272,7 +294,7 @@ const Product = () => {
                 </td>
               </tr>
             )}
-            {activityData.map((row) => (
+            {paginatedData.map((row) => (
               <tr key={row.no}>
                 <td>{row.no}</td>
                 <td>{row.waktu}</td>
@@ -299,6 +321,21 @@ const Product = () => {
             ))}
           </tbody>
         </table>
+
+        {totalPages > 1 && (
+          <div className="pagination">
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i + 1}
+                onClick={() => setCurrentPage(i + 1)}
+                className={`tab-button ${currentPage === i + 1 ? "active" : ""}`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
+        )}
+
 
       {fullscreenImg && (
           <div className="fullscreen-overlay" onClick={closeFullscreen}>

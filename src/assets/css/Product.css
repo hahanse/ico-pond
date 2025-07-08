@@ -198,6 +198,34 @@ th {
   transform: scale(1.2);
 }
 
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pagination button:hover {
+  background-color: #e0f7f7;
+}
+
+.pagination button.active {
+  background-color: #27bdb1;
+  color: white;
+  border-color: #27bdb1;
+}
+
 /* responsive hp */
 @media (max-width: 768px) {
   .gauge-section {
