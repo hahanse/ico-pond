@@ -2,7 +2,7 @@ import React from 'react';
 import '../assets/css/HomePage.css';
 
 //foto deskripsi singkat
-import image2 from '../assets/image/image2.jpg';
+import image1 from '../assets/image/image1.jpg';
 
 // foto bagian manfaat
 import pakan from '../assets/image/pakan.png';
@@ -65,18 +65,19 @@ function HomePage() {
           <h1>Sistem Pemeliharaan dan Perlindungan Otomatis.</h1>
           <h2>Tidak Perlu Secara Manual!</h2>
           <p>
-            Pemantau perawatan kolam dengan aplikasi kami. Ketika peternak panen otomatis & sistem pemeliharaan ikan secara efisien,
-            sistem pintar kami memberikan pengalaman yang lancar dan aman, kapan saja, di mana saja.
+            ICo-Pond dilengkapi dengan sistem pemeliharaan dan perlindungan otomatis untuk kolam bibit ikan
+            lele, termasuk deteksi serangan hama burung. Sistem pintar ICo-Pond menghadirkan pengalaman
+            pengelolaan kolam yang efisien dan real-time, kapan saja dan di mana saja.
           </p>
         </div>
         <div className="hero-image">
-          <img src={image2} alt="ICo-Pond Preview" className="hero-image" />
+          <img src={image1} alt="ICo-Pond Preview" className="hero-image" />
         </div>
       </section>
 
       <section className="features">
         <p className="subtitle">Kenapa menggunakan ICo-Pond?</p>
-        <h2>Manfaat Ico-Pond sebagai pemantauan kolam peternak</h2>
+        <h2>Manfaat Ico-Pond sebagai sistem kolam peternak</h2>
         <div className="feature-cards">
           {features.map((item, idx) => (
             <div className="card" key={idx}>

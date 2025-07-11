@@ -201,7 +201,7 @@ th {
 .pagination {
   display: flex;
   justify-content: flex-end;
-  margin-top: 1rem;
+  margin-top: 16px;
   gap: 8px;
   flex-wrap: wrap;
 }
@@ -283,5 +283,16 @@ th {
     top: 10px;
     right: 16px;
     font-size: 28px;
+  }
+
+  .pagination {
+    justify-content: center; /* biar di tengah di hp */
+  }
+
+  .pagination .tab-button {
+    width: auto;           /* jangan full */
+    min-width: 32px;       /* biar tetap ada ukuran minimal */
+    padding: 6px 10px;     /* lebih kecil */
+    font-size: 14px;
   }
 }

@@ -13,16 +13,16 @@ function Footer() {
         <div className="footer-links">
           <h4>Menu</h4>
           <ul>
-            <li><a href="/">Beranda</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="/About">About</a></li>
             <li><a href="/Product">Monitoring</a></li>
           </ul>
         </div>
 
         <div className="footer-contact">
-          <h4>Kontak</h4>
-          <p>Email: icooopondd@email.com</p>
-          <p>Telp: +62 895-1032-8573</p>
+          <h4>Contact</h4>
+          <p>Email: icopond3@gmail.com</p>
+          <p>Phone: +62 895-1032-8573</p>
         </div>
       </div>
       <div className="footer-bottom">

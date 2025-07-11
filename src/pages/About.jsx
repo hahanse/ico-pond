@@ -7,16 +7,16 @@ import bayu from '../assets/image/bayu.jpg';
 import fakhri from '../assets/image/fakhri.jpg';
 
 // Gambar kolam
-import image1 from '../assets/image/image1.jpg';
 import image2 from '../assets/image/image2.jpg';
 import image3 from '../assets/image/image3.jpg';
 import image4 from '../assets/image/image4.jpg';
+import image5 from '../assets/image/image5.jpg';
 
 // GIF kolam
 import kolamGif from '../assets/image/gif.gif';
 
 function About() {
-  const imageList = [image1, image2, image3, image4];
+  const imageList = [image2, image3, image4, image5];
 
   const team = [
     { name: 'Rafi Raihan Firdaus', role: 'Front-End', photo: rafi },
@@ -31,9 +31,9 @@ function About() {
         <p>
           Kami adalah tim mahasiswa Teknik Telekomunikasi Universitas Telkom yang meneliti sistem
           pemeliharaan dan perlindungan kolam bibit ikan lele berbasis IoT. Sistem ini terintegrasi
-          melalui website dan dilengkapi fitur otomatisasi seperti pemberian pakan, pupuk, serta
-          pengusiran hama burung. Tujuan kami adalah membantu peternak memantau kolam secara
-          efisien, real-time, dan berkelanjutan.
+          melalui website dan dilengkapi fitur otomatisasi seperti pemberian pakan, pupuk, deteksi
+          serta pengusiran hama burung. Tujuan kami adalah membantu peternak mengelola kolam bibit
+          ikan lele secara efisien dan real-time.
         </p>
         <div className="image-row">
           {imageList.map((img, idx) => (
@@ -47,7 +47,9 @@ function About() {
       <section className="about-gif">
       <div className="gif-wrapper">
         <img src={kolamGif} alt="GIF kolam" />
-        <p className="gif-caption">Visualisasi kolam kami yang cerdas dan responsif menggunakan ICo-Pond</p>
+        <div className="gif-caption">
+          Implementasi sistem ICo-Pond
+        </div>
       </div>
       </section>
 
