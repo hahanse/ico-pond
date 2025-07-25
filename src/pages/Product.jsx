@@ -28,7 +28,11 @@ const Product = () => {
   useEffect(() => {
     const savedHama = localStorage.getItem("hamaData");
     if (savedHama) {
-      setHamaData(JSON.parse(savedHama));
+      const parsed = JSON.parse(savedHama).map(item => ({
+        ...item,
+        keterangan: "Terdeteksi makhluk hidup dekat kolam"
+      }));
+      setHamaData(parsed);
     }
 
     const fetchHamaData = () => {
