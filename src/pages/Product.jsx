@@ -33,6 +33,8 @@ const Product = () => {
         keterangan: "Terdeteksi makhluk hidup dekat kolam"
       }));
       setHamaData(parsed);
+      localStorage.setItem("hamaData", JSON.stringify(parsed)); // Simpan hasil yang sudah diperbarui
+
     }
 
     const fetchHamaData = () => {
