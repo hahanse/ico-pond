@@ -119,7 +119,7 @@ const Product = () => {
         waktu: new Date(timestamp).toLocaleString("id-ID", {
           day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
         }),
-        keterangan: "Terdeteksi gerakan hama burung",
+        keterangan: "Terdeteksi ada mahluk hidup dekat kolam",
         imageUrl: url,
       };
 
