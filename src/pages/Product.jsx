@@ -41,7 +41,7 @@ const Product = () => {
               waktu: new Date(item.timestamp).toLocaleString("id-ID", {
                 day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
               }),
-              keterangan: "Terdeteksi gerakan hama burung",
+              keterangan: "Terdeteksi ada mahluk hidup dekat kolam",
               imageUrl: item.url,
             }));
             setHamaData(formatted);
