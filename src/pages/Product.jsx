@@ -5,12 +5,6 @@ import "../assets/css/Product.css";
 
 const socket = io("https://deployta-production-2a69.up.railway.app/");
 
-const initialPakanData = [
-  { no: 1, waktu: "5 Mei 2025, 10:00", keterangan: "Pakan telah diberikan", aksi: "Servo pemberi pakan berjalan" },
-  { no: 2, waktu: "6 Mei 2025, 09:30", keterangan: "Pupuk telah diberikan", aksi: "Servo pemberi pupuk berjalan" },
-  { no: 3, waktu: "7 Mei 2025, 08:45", keterangan: "Pupuk telah diberikan", aksi: "Servo pemberi pupuk berjalan" },
-  { no: 4, waktu: "9 Mei 2025, 10:15", keterangan: "Pakan telah diberikan", aksi: "Servo pemberi pakan berjalan" },
-];
 
 const Product = () => {
   const [activeTab, setActiveTab] = useState("hama");
