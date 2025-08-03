@@ -20,43 +20,49 @@ const Product = () => {
   const itemsPerPage = 10; // jumlah item per halaman
 
   useEffect(() => {
-    const savedHama = localStorage.getItem("hamaData");
-    if (savedHama) {
-      const parsed = JSON.parse(savedHama).map(item => ({
-        ...item,
-        keterangan: "Terdeteksi makhluk hidup dekat kolam"
-      }));
-      setHamaData(parsed);
-      localStorage.setItem("hamaData", JSON.stringify(parsed)); // Simpan hasil yang sudah diperbarui
-
-    }
-
-    const fetchHamaData = () => {
-      fetch("https://deployta-production-2a69.up.railway.app/")
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.imageUrls?.length > 0) {
-            const formatted = data.imageUrls.slice(0, 100).map((item, index) => ({
-              no: index + 1,
-              waktu: new Date(item.timestamp).toLocaleString("id-ID", {
-                day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
-              }),
-              keterangan: "Terdeteksi ada mahluk hidup dekat kolam",
-              imageUrl: item.url
-            }));
-            setHamaData(formatted);
-            localStorage.setItem("hamaData", JSON.stringify(formatted));
-          }
-        })
-        .catch((err) => console.error("Gagal fetch gambar:", err));
+    const fetchHamaData = async () => {
+      try {
+        const res = await fetch("https://deployta-production-2a69.up.railway.app/");
+        const data = await res.json();
+        console.log("Data dari backend:", data);
+  
+        if (data.imageUrls?.length > 0) {
+          const formatted = data.imageUrls.map((item, index) => ({
+            no: index + 1,
+            waktu: new Date(item.timestamp).toLocaleString("id-ID", {
+              day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
+            }),
+            keterangan: "Terdeteksi ada mahluk hidup dekat kolam",
+            imageUrl: item.url
+          }));
+          setHamaData(formatted);
+        }
+      } catch (err) {
+        console.error("Gagal fetch gambar:", err);
+      }
     };
-    
-    if (savedHama) {
-      setHamaData(JSON.parse(savedHama));
-    } else {
-      fetchHamaData();
-    }
-
+    fetchHamaData();
+  
+    socket.on("phUpdate", (newPhValue) => {
+      setPhValue(newPhValue);
+    });
+  
+    socket.on("newImageUrl", ({ url, timestamp }) => {
+      const newData = {
+        no: 1,
+        waktu: new Date(timestamp).toLocaleString("id-ID", {
+          day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
+        }),
+        keterangan: "Terdeteksi ada mahluk hidup dekat kolam",
+        imageUrl: url,
+      };
+  
+      setHamaData((prev) => {
+        const updated = [newData, ...prev].slice(0, 100).map((item, index) => ({ ...item, no: index + 1 }));
+        return updated;
+      });
+    });
+  
     fetch("https://log-servo-default-rtdb.firebaseio.com/servoLogs.json")
     .then((res) => res.json())
     .then((firebaseData) => {
