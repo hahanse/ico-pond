@@ -63,6 +63,7 @@ const Product = () => {
         return updated;
       });
     });
+
     fetch("https://log-servo-default-rtdb.firebaseio.com/servoLogs.json")
     .then((res) => res.json())
     .then((firebaseData) => {
@@ -115,11 +116,10 @@ const Product = () => {
 
     const interval = setInterval(fetchHamaData, 5 * 60 * 1000);
 
-    socket.on("phUpdate", () => {
-      const randomPh = (Math.random() * (6.5 - 6.16) + 6.16).toFixed(2);
-      setPhValue(randomPh);
+    socket.on("phUpdate", (newPhValue) => {
+      setPhValue(newPhValue);
     });
-    
+
     socket.on("newImageUrl", ({ url, timestamp }) => {
       const newData = {
         no: 1,
