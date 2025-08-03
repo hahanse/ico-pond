@@ -42,7 +42,7 @@ const Product = () => {
                 day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit",
               }),
               keterangan: "Terdeteksi ada mahluk hidup dekat kolam",
-              imageUrl: item.url,
+              imageUrl: item.url
             }));
             setHamaData(formatted);
             localStorage.setItem("hamaData", JSON.stringify(formatted));
