@@ -50,7 +50,7 @@ const Product = () => {
         })
         .catch((err) => console.error("Gagal fetch gambar:", err));
     };
-    fetchHamaData();
+    
     if (savedHama) {
       setHamaData(JSON.parse(savedHama));
     } else {
