@@ -115,11 +115,6 @@ const Product = () => {
   
 
     const interval = setInterval(fetchHamaData, 5 * 60 * 1000);
-
-    socket.on("phUpdate", () => {
-      const randomPh = (Math.random() * (6.5 - 6.16) + 6.16).toFixed(2);
-      setPhValue(randomPh);
-    });
     
 
     socket.on("newImageUrl", ({ url, timestamp }) => {
